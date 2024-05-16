@@ -137,3 +137,10 @@ List opcionesAcademicas = [
       'icono': Icons.volunteer_activism,
     },
 ];
+
+//////////
+llamadoModalMenu(BuildContext context){
+  return showModalBottomSheet(context: context, builder:(context){
+    return Scaffold();
+  });
+}
