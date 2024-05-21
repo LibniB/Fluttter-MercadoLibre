@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_2/fuenteDatos.dart';
 
 modalMenu(BuildContext context){
   return showModalBottomSheet(
@@ -6,31 +7,39 @@ modalMenu(BuildContext context){
     context: context, 
     builder: (context) {
       return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.amber[400],
-          foregroundColor: Colors.black,
-          title: Text("Menu Modal"),
-        ),
-        body: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
+          appBar: AppBar(
+            backgroundColor: Colors.amber[400],
+            foregroundColor: Colors.black,
+            title:const Text("Menu Modal"),
           ),
-          itemCount: opcionesAcademicas.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min, // This line ensures the column does not exceed its bounds
-              children: [
-                Icon(opcionesAcademicas[index]["icono"]),
-                SizedBox(height: 8), // Add spacing between icon and text
-                Text(opcionesAcademicas[index]["titulo"]),
-              ],
+          body: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
             ),
-          );
-          },
-        ),
+            itemCount: opcionesAcademicas.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Center(
+                child: IconButton(
+                  onPressed: (){
+                    llamadoModalMenu(
+                      context, opcionesAcademicas[index]["titulo"],
+                      opcionesAcademicas[index]["icono"],
+                      opcionesAcademicas[index]["codigo"]);
+
+                  }, 
+                  icon: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(opcionesAcademicas[index]["icono"]),
+                      Flexible(child: Text(opcionesAcademicas[index]["titulo"])),
+                    ]) ,
+                ),
+              );
+            },
+          ),
+        
       );
-  });
+    });
 }
 
 
@@ -139,8 +148,36 @@ List opcionesAcademicas = [
 ];
 
 //////////
-llamadoModalMenu(BuildContext context){
-  return showModalBottomSheet(context: context, builder:(context){
-    return Scaffold();
+llamadoModalMenu(BuildContext context, String tituloAppBar,menuIcono,String codigo){
+  return showModalBottomSheet(
+    isScrollControlled: false,
+    context: context,
+    builder:(context){
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.amber[400],
+        foregroundColor: Colors.black,
+      title: Text(tituloAppBar),
+      actions: [Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Icon(menuIcono),
+      )],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){},
+        child: Icon(Icons.file_copy),
+        backgroundColor: Colors.yellowAccent[700],
+        foregroundColor: Colors.black,
+        ),
+      body: codigo == "001" ?ListView.builder(
+        itemCount: notas.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            title:Text(notas[index]["nombre"]),
+            subtitle: Text(notas[index]["creditos"].toString()),
+          );
+        },
+      ): Text(("no tiene datos"))
+    );
   });
 }

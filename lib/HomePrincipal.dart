@@ -19,12 +19,12 @@ class _HomePrincipalState extends State<HomePrincipal> {
         appBar: AppBar(
           backgroundColor: Colors.amber[400],
           foregroundColor: Colors.black,
-          title: Text("Mercado Libre Col"),
+          title: const Text("Mercado Libre Col"),
           leading: IconButton(
             onPressed: () {
               modalMenu(context);
           },
-          icon: Icon(Icons.menu_rounded)),
+          icon: const Icon(Icons.menu_rounded)),
         ),
        
       ),
